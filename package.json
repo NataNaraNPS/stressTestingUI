@@ -4,5 +4,9 @@
     "ejs": "^3.1.10",
     "express": "^4.21.1",
     "selenium-webdriver": "^4.27.0"
+  },
+  "scripts": {
+  "start": "node server.js"
   }
 }
+
