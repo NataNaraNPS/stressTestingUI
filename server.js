@@ -5,7 +5,7 @@ const stressTestUI = require('./stressTest'); // Mengimpor pengujian stres
 
 // Inisialisasi Express.js
 const app = express();
-const port = process.env.PORT || 3000; // Port yang digunakan
+const port = process.env.PORT; // Port yang digunakan
 
 // Set up view engine
 app.set('view engine', 'ejs');
