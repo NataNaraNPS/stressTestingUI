@@ -1,4 +1,3 @@
-// server.js
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
@@ -6,8 +5,7 @@ const stressTestUI = require('./stressTest'); // Mengimpor pengujian stres
 
 // Inisialisasi Express.js
 const app = express();
-const port = process.env.PORT || 3000;;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const port = process.env.PORT || 3000; // Port yang digunakan
 
 // Set up view engine
 app.set('view engine', 'ejs');
@@ -49,7 +47,6 @@ app.post('/start-test', async (req, res) => {
         res.render('index', { result: { success: false, message: `Terjadi kesalahan: ${error.message}` } });
     }
 });
-
 
 // Mulai server
 app.listen(port, () => {
