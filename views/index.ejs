@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stres Test UI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Stres Test UI</h1>
+
+    <!-- Form untuk memasukkan URL, parameter pengujian, dan elemen yang ingin diuji -->
+    <form method="POST" action="/start-test">
+        <label for="url">URL Halaman: </label>
+        <input type="text" id="url" name="url" required>
+        <br>
+
+        <label for="repeats">Jumlah Ulangan Pengujian: </label>
+        <input type="number" id="repeats" name="repeats" value="1" min="1" disabled>
+        <br>
+
+        <label for="duration">Durasi per Pengujian (detik): </label>
+        <input type="number" id="duration" name="duration" value="10" min="1">
+        <br>
+
+        <label for="users">Jumlah Pengguna: </label>
+        <input type="number" id="users" name="users" value="1" min="1">
+        <br><br>
+
+        <!-- Input untuk elemen kolom (form-control) -->
+        <label for="inputElement">Kolom Selected: </label>
+        <input type="text" id="inputElement" name="inputElement" class="form-control" placeholder="Masukkan Nilai">
+        <br>
+
+        <!-- Input untuk value (misalnya '210555001') -->
+        <label for="inputValue">Value: </label>
+        <input type="text" id="inputValue" name="inputValue" value="nim">
+        <br>
+
+        <!-- Tombol dengan class 'btn btn-primary' -->
+        <label for="buttonElement">Tombol: </label>
+        <input type="text" id="buttonElement" name="buttonElement" value="submit">
+        <br><br>
+        
+        <button type="submit" class="btn btn-primary">Mulai Pengujian</button>
+    </form>
+
+    <!-- Menampilkan hasil pengujian -->
+    <div>
+        <% if (typeof result !== 'undefined' && result.success && result.results && result.results.length > 0) { %>
+            <h2>Hasil Pengujian:</h2>
+            <ul>
+                <li><strong>URL:</strong> <%= result.results[0].url %></li>
+                <li><strong>Total Pengujian:</strong> <%= result.results[0].totalTests %></li>
+                <li><strong>Jumlah Sukses:</strong> <%= result.results[0].successCount %></li>
+                <li><strong>Jumlah Gagal:</strong> <%= result.results[0].errorCount %></li>
+                <li><strong>Total Waktu Pengujian:</strong> <%= result.results[0].totalLoadTime %> detik</li>
+                <li><strong>Rata-rata Waktu Pengujian:</strong> <%= result.results[0].avgLoadTime %> detik</li>
+                <li><strong>Tingkat Keberhasilan:</strong> <%= result.results[0].successRate %>%</li>
+                <li><strong>Tingkat Kesalahan:</strong> <%= result.results[0].errorRate %>%</li>
+            </ul>
+
+            <!-- Menampilkan User Results -->
+            <h3>Detail Pengujian Per Pengguna:</h3>
+            <% if (result.results && result.results.length > 0 && result.results[0].userResults) { %>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>ID Pengguna</th>
+                        <th>Waktu Pengujian (detik)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% result.results[0].userResults.forEach(user => { %>
+                        <tr>
+                            <td><%= user.userId %></td>
+                            <td><%= user.loadTime.toFixed(2) %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+            <% } else { %>
+            <p>Tidak ada data pengujian per pengguna yang tersedia.</p>
+            <% } %>
+    </div>
+</body>
+</html>
+
